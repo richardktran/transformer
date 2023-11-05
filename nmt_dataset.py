@@ -45,6 +45,7 @@ class NMTDataset:
     def build_dataset(self, buffer_size, batch_size, max_sequence_length=100):
         input_tensor, target_tensor = self.load_dataset(max_sequence_length)
         input_train, input_val, target_train, target_val = train_test_split(input_tensor, target_tensor, test_size=0.2)
+
         train_dataset = tf.data.Dataset.from_tensor_slices((input_train, target_train))
         train_dataset = train_dataset.shuffle(buffer_size).batch(batch_size)
 
