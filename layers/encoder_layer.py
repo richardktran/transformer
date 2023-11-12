@@ -1,4 +1,5 @@
 import tensorflow as tf
+from layers.multi_head_attention import MultiHeadAttention
 from layers.feed_forward import FeedForwardLayer
 
 
@@ -27,12 +28,12 @@ class EncoderLayer(tf.keras.layers.Layer):
         :param mask: (batch_size, 1, 1, input_seq_len)
         :return: (batch_size, input_seq_len, d_model)
         """
-        x_residual = x.clone()
-        x = self.attention(x, x, x, mask)
+        x_residual = x
+        x = self.attention(x, training, mask)
         x = self.dropout1(x)
         x = self.norm1(x + x_residual)
 
-        x_residual = x.clone()
+        x_residual = x
         x = self.ffn(x)
         x = self.dropout2(x)
         x = self.norm2(x + x_residual)

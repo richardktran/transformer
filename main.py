@@ -23,6 +23,14 @@ if __name__ == '__main__':
         dropout_rate=dropout_rate
     )
 
+    (en, vi) = next(iter(train_dataset))
+
+    # transformer.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+    transformer(en, training=True)
+
+    print(transformer.summary())
+
+
     # for (input, target) in train_dataset:
     #     print(input.shape)
     #     print(target.shape)
